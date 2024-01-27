@@ -4,11 +4,12 @@ const product = new ProductManager('productFile.json');
 const routerProd = Router();
 
 routerProd.get('/', async (req, res) => {
+
     try {
         let allProducts = await product.getProducts();
         let limit = req.query.limit;
-        if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit) }
-        res.status(200).json(allProducts);
+        if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
+        res.render('home', { products: allProducts });
     } catch (err) { res.status(404).json(`Error retrieving products: ${err.message}`) }
 })
 
