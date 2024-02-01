@@ -9,7 +9,7 @@ routerProd.get('/', async (req, res) => {
         let allProducts = await product.getProducts();
         let limit = req.query.limit;
         if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
-        res.render('home', { products: allProducts });
+        res.status(200).json(allProducts);
     } catch (err) { res.status(404).json(`Error retrieving products: ${err.message}`) }
 })
 
