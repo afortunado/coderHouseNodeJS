@@ -38,7 +38,7 @@ routerProd.put('/:pid', async (req, res) => {
 
 routerProd.delete('/:pid', async (req, res) => {
     try {
-        const idProduct = parseFloat(req.params.pid);
+        const idProduct = req.params.pid;
         await product.deleteProducts(idProduct);
         res.status(200).json("Product deleted successfully")
     } catch (err) { res.status(404).json(`Couldn't delete product: ${err.message}`) }

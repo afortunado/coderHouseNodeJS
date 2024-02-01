@@ -9,7 +9,6 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
-const PORT = 8080 || process.env.PORT;
 
 app.use(express.static(__dirname + "/public"));
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
@@ -21,7 +20,5 @@ app.use('/api/products', routerProd);
 app.use('/api/cart', routerCart);
 app.use('/home', routerHome);
 
-app.listen(PORT, () => {
-    console.log("Server running on port", PORT)
-});
+export default app;
 

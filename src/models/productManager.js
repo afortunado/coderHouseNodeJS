@@ -58,13 +58,15 @@ class ProductManager {
         try {
             const products = await this.getProducts();
             const productToupdate = products.find((p) => p.id === id);
-            if (productToupdate) {
-                productToupdate.title = product.title;
-                productToupdate.description = product.description;
-                productToupdate.price = product.price;
-                productToupdate.thumbnail = product.thumbnail;
-                productToupdate.code = product.code;
-                productToupdate.stock = product.stock;
+            const productChecked = await this.validateProduct(productToupdate);
+            console.log(productChecked)
+            if (productChecked) {
+                productChecked.title = product.title;
+                productChecked.description = product.description;
+                productChecked.price = product.price;
+                productChecked.thumbnail = product.thumbnail;
+                productChecked.code = product.code;
+                productChecked.stock = product.stock;
 
                 const newArray = products.filter(p => p.id !== id)
                 newArray.push(productToupdate)
@@ -89,14 +91,17 @@ class ProductManager {
 
     async validateProduct(product) {
         const requiredFields = ['id', 'title', 'description', 'price', 'code', 'stock', 'category'];
+        for (const field of requiredFields) {
+            if (!(field in product)) {
+                throw new Error('Wrong data entry');
+            } else { await this.validateCode(product.code) }
+        }
+    }
+
+    async validateCode(code) {
         try {
-            for (const field of requiredFields) {
-                if (!(field in product)) {
-                    throw new Error('Wrong data entry');
-                }
-            }
             const validateCode = await this.getProducts()
-            if (validateCode.some(repeatedCode => repeatedCode.code === product.code)) {
+            if (validateCode.some(repeatedCode => repeatedCode.code === code)) {
                 throw new Error('Repeated code')
             }
         } catch (err) {
@@ -104,6 +109,9 @@ class ProductManager {
         }
     }
 }
+
+
+
 
 export default ProductManager;
 
