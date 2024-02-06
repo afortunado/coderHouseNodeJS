@@ -3,12 +3,13 @@ import routerProd from './routes/products.routes.js';
 import routerCart from './routes/cart.routes.js';
 import routerHome from './routes/home.routes.js';
 import handlebars from 'express-handlebars'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import __dirname from './utils.js';
+import http from "http";
+import { Server } from "socket.io";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const app = express();
+const PORT = 8080 || process.env.PORT;
+const server = http.createServer(app);
 
 app.use(express.static(__dirname + "/public"));
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
@@ -20,5 +21,13 @@ app.use('/api/products', routerProd);
 app.use('/api/cart', routerCart);
 app.use('/home', routerHome);
 
-export default app;
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log("User connected")
+})
+
+server.listen(PORT, () => {
+    console.log("Server running on port", PORT)
+});
+
 

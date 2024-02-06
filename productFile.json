@@ -6,6 +6,8 @@
     "thumbnail": "CARROT_IMG",
     "code": 998,
     "stock": 95,
+    "category": "X",
+    "status": true,
     "id": "b2ecedcc-6653-4822-a4bf-aadf5a1224a2"
   },
   {
@@ -15,6 +17,8 @@
     "thumbnail": "WINE_IMG",
     "code": 997,
     "stock": 100,
+    "category": "X",
+    "status": true,
     "id": "62eb67ed-2726-4954-955f-7561c145d2b2"
   }
 ]
