@@ -6,6 +6,7 @@ import handlebars from 'express-handlebars'
 import __dirname from './utils.js';
 import http from "http";
 import { Server } from "socket.io";
+import Database from './db/index.js'
 
 const app = express();
 const PORT = 8080 || process.env.PORT;
@@ -21,6 +22,7 @@ app.use('/api/products', routerProd);
 app.use('/api/cart', routerCart);
 app.use('/home', routerHome);
 
+
 const io = new Server(server);
 io.on('connection', (socket) => {
     console.log("User connected")
@@ -28,6 +30,7 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, () => {
     console.log("Server running on port", PORT)
+    Database.connect();
 });
 
 

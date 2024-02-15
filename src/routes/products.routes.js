@@ -1,15 +1,21 @@
 import { Router } from "express";
-import ProductManager from '../models/productManager.js';
-const product = new ProductManager('productFile.json');
+//import ProductManager from '../dao/productManager.js';
+import Product from '../dao/models/product.model.js'
+//const product = new ProductManager('productFile.json');
 const routerProd = Router();
 
 routerProd.get('/', async (req, res) => {
 
     try {
-        let allProducts = await product.getProducts();
+        let resp = await Product.find()
+        res.status(200).json({
+            msg: 'Productos encontrados',
+            Data: resp
+        })
+        /*let allProducts = await product.getProducts();
         let limit = req.query.limit;
         if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
-        res.status(200).json(allProducts);
+        res.status(200).json(allProducts);*/
     } catch (err) { res.status(404).json(`Error retrieving products: ${err.message}`) }
 })
 
