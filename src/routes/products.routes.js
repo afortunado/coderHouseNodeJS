@@ -1,16 +1,18 @@
 import { Router } from "express";
 //import ProductManager from '../dao/productManager.js';
-import Product from '../dao/models/product.model.js'
 //const product = new ProductManager('productFile.json');
+import ProductManagerMongo from '../dao/db/productManagerMongo.js';
 const routerProd = Router();
+const productManager = new ProductManagerMongo();
 
 routerProd.get('/', async (req, res) => {
-
     try {
-        let resp = await Product.find()
+        let allProducts = await productManager.getProduct();
+        let limit = req.query.limit;
+        if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
         res.status(200).json({
             msg: 'Productos encontrados',
-            Data: resp
+            Data: allProducts
         })
         /*let allProducts = await product.getProducts();
         let limit = req.query.limit;
@@ -28,8 +30,8 @@ routerProd.get('/:pid', async (req, res) => {
 })
 
 routerProd.post('/', async (req, res) => {
-    await product.addProduct(req.body)
     try {
+        await productManager.addProduct(req.body)
         res.status(200).json("Product added successfully");
     } catch (err) { res.status(404).json(`Something went wrong: ${err.message}`) }
 })

@@ -1,8 +1,9 @@
 import { Router } from "express";
 //import CartManager from '../dao/cartManager.js';
 //const cart = new CartManager('cartFile.json');
-import Cart from '../dao/models/cart.model.js'
+import CartManagerMongo from '../dao/db/cartManagerMongo.js'
 const routerCart = Router();
+const CartManager = new CartManagerMongo();
 
 routerCart.post("/", async (req, res) => {
     try { let theCart = await cart.createCart(); res.status(200).json(theCart); }

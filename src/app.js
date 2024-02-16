@@ -6,7 +6,7 @@ import handlebars from 'express-handlebars'
 import __dirname from './utils.js';
 import http from "http";
 import { Server } from "socket.io";
-import Database from './db/index.js'
+import Database from './dao/db/index.js'
 
 const app = express();
 const PORT = 8080 || process.env.PORT;
