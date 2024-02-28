@@ -3,10 +3,10 @@ import { Router } from "express";
 //const cart = new CartManager('cartFile.json');
 import CartManagerMongo from '../dao/db/cartManagerMongo.js'
 const routerCart = Router();
-const CartManager = new CartManagerMongo();
+const cartManager = new CartManagerMongo();
 
 routerCart.post("/", async (req, res) => {
-    try { let theCart = await cart.createCart(); res.status(200).json(theCart); }
+    try { let theCart = await cartManager.getCart(); res.status(200).json(theCart); }
     catch (err) { res.status(404).json(`Error retrieving products: ${err.message}`) }
 })
 
@@ -14,7 +14,7 @@ routerCart.post("/:cid/product/:pid", async (req, res) => {
     let cartId = req.params.cid;
     let productId = req.params.pid;
     try {
-        let theCart = await cart.addProductToCart(cartId, productId)
+        let theCart = await cartManager.addProductToCart(cartId, productId)
         res.status(200).json(theCart);
     } catch (err) { res.status(404).json(`Something went wrong: ${err.message}`) }
 })
@@ -22,12 +22,42 @@ routerCart.post("/:cid/product/:pid", async (req, res) => {
 routerCart.get("/:cid", async (req, res) => {
     let cartId = req.params.cid;
     try {
-        let cartById = await cart.getCartById(cartId);
+        let cartById = await cartManager.getCartById(cartId);
         res.status(200).json(cartById.products);
     } catch (err) { res.status(404).json(`Error retrieving product: ${err.message}`) }
 
 })
 
+routerCart.put("/:cid", async (req, res) => {
+
+})
+
+routerCart.put("/:cid/product/:pid", async (req, res) => {
+    try {
+        const idCart = req.params.cid;
+        const idProduct = req.params.pid;
+        await productManager.updateProduct(idCart, idProduct, req.body);
+        res.status(200).json("Product updated successfully");
+    } catch (err) { res.status(404).json(`Couldn't update product: ${err.message}`); }
+})
+
+routerCart.delete("/:cid/product/:pid", async (req, res) => {
+    let cartId = req.params.cid;
+    let productId = req.params.pid;
+    try {
+        let newCart = await cartManager.deleteProduct(cartId, productId)
+        res.status(200).json("Product deleted: ", newCart);
+    } catch (err) { res.status(404).json(`Something went wrong: ${err.message}`) }
+})
+
+routerCart.delete("/:cid", async (req, res) => {
+    try {
+        const cartId = req.params.pid;
+        await cartManager.deleteCart(cartId);
+        res.status(200).json("Cart deleted successfully")
+    } catch (err) { res.status(404).json(`Couldn't delete product: ${err.message}`) }
+
+})
 
 
 export default routerCart;
