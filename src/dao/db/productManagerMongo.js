@@ -4,11 +4,30 @@ class ProductManagerMongo {
 
     async getProduct(limit, page, query, sort) {
         try {
-            let products = await Product.find()
-            const productLimit = limit && !isNaN(limit) ? parseInt(limit) : 10;
-            const currentPage = page && !isNaN(page) ? parseInt(page) : 1;
-            products = products.limit(productLimit);
-            return products;
+            let category = query.category;
+            let stock = query.stock;
+            let findProduct = Product.find();
+
+            if (category) {
+                findProduct = findProduct.where('category').equals(category);
+            }
+
+            if (stock === "available") {
+                findProduct = findProduct.where('stock').gt(0);
+            } else if (stock === "unavailable") {
+                findProduct = findProduct.where('stock').eq(0);
+            }
+
+            if (sort === "desc") {
+                findProduct = findProduct.sort({ price: -1 })
+            } else {
+                findProduct = findProduct.sort({ price: 1 })
+            }
+
+            let pagination = await Product.paginate(findProduct, { limit: limit, page: page });
+            console.log(pagination)
+            return pagination;
+
         } catch (err) {
             throw new Error("Error finding products: ", err)
         }

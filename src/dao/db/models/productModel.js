@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mongoPaginate from ('mongoose-paginate-v2');
+import mongoPaginate from 'mongoose-paginate-v2';
 
 const ProductSchema = new mongoose.Schema({
     title: {
@@ -26,12 +26,14 @@ const ProductSchema = new mongoose.Schema({
     stock: {
         type: Number,
         require: true,
-        default: 0
+        default: 0,
+        index: true
     },
     category: {
         type: String,
         require: true,
-        enum: ["food", "drinks", "stuff"]
+        enum: ["food", "drinks", "stuff"],
+        index: true
     },
     status: {
         type: Boolean,

@@ -7,9 +7,9 @@ const productManager = new ProductManagerMongo();
 
 routerProd.get('/', async (req, res) => {
     try {
-        let limit = req.query.limit;
-        let page = req.query.page;
-        let query = req.query.query;
+        let limit = req.query.limit || 10;
+        let page = req.query.page || 1;
+        let query = req.query;
         let sort = req.query.sort;
 
         let allProducts = await productManager.getProduct(limit, page, query, sort);
@@ -22,7 +22,7 @@ routerProd.get('/', async (req, res) => {
         let limit = req.query.limit;
         if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
         res.status(200).json(allProducts);*/
-    } catch (err) { res.status(404).json(`Error retrieving products: ${err.message}`) }
+    } catch (err) { res.status(404).json("Error retrieving products: " + err.message) }
 })
 
 routerProd.get('/:pid', async (req, res) => {

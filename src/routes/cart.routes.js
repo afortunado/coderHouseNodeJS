@@ -37,16 +37,16 @@ routerCart.get("/:cid", async (req, res) => {
     } catch (err) { res.status(404).json(`Couldn't update product: ${err.message}`); }
 })*/
 
-routerCart.deleteCartProduct("/:cid/product/:pid", async (req, res) => {
+routerCart.delete("/:cid/product/:pid", async (req, res) => {
     let cartId = req.params.cid;
     let productId = req.params.pid;
     try {
-        let newCart = await cartManager.deleteProduct(cartId, productId)
+        let newCart = await cartManager.deleteCartProduct(cartId, productId)
         res.status(200).json("Product deleted: ", newCart);
     } catch (err) { res.status(404).json(`Something went wrong: ${err.message}`) }
 })
 
-routerCart.deleteCart("/:cid", async (req, res) => {
+routerCart.delete("/:cid", async (req, res) => {
     try {
         const cartId = req.params.pid;
         await cartManager.deleteCart(cartId);
