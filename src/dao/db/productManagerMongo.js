@@ -40,7 +40,7 @@ class ProductManagerMongo {
             if (!product.title || !product.description || !product.price || !product.code || !product.stock || !product.category) {
                 throw new Error("Missing data")
             } else {
-                const updatedProduct = {
+                productToUpdate = {
                     $set: {
                         title: product.title,
                         description: product.description,
@@ -52,7 +52,7 @@ class ProductManagerMongo {
                         status: product.status ?? true
                     }
                 }
-                return await Product.updateOne({ _id: id }, updatedProduct);
+                return await Product.updateOne({ _id: id }, productToUpdate);
             }
 
         } catch (err) {

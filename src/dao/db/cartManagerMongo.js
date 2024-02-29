@@ -46,7 +46,7 @@ class CartManagerMongo {
         }
     }
 
-    async deleteProduct(cartId, productId) {
+    async deleteCartProduct(cartId, productId) {
         try {
             let currentCart = await Cart.findById(cartId);
             let newCart = await currentCart.products.deleteOne({ _id: productId })
