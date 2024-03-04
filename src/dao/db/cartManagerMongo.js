@@ -29,14 +29,7 @@ class CartManagerMongo {
     async addProductToCart(cartId, productId) {
         try {
             let currentCart = await Cart.findById(cartId);
-            const existingProduct = currentCart.products.find(e => e.product.equals(productId));
-
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                currentCart.products.push({ product: productId });
-            }
-            currentCart.quantity += 1;
+            currentCart.products.push({ product: productId });
 
             await currentCart.save();
 
@@ -44,6 +37,18 @@ class CartManagerMongo {
         } catch (err) {
             console.error('Error creating cart: ' + err.message);
         }
+    }
+
+    async updateCart(idCart, idProduct, quantity) {
+        try {
+            let currentCart = await Cart.findById(idCart);
+            let existingProduct = currentCart.products.find(e => e.product.equals(idProduct));
+            existingProduct.quantity += quantity.quantity;
+
+            await currentCart.save();
+
+            return currentCart;
+        } catch (err) { throw new Error(err) }
     }
 
     async deleteCartProduct(cartId, productId) {
@@ -62,8 +67,8 @@ class CartManagerMongo {
 
     async deleteCart(cartId) {
         try {
-            let deletedCart = await Cart.deleteOne({ _id: cartId })
-            return deletedCart;
+            await Cart.deleteOne({ _id: cartId })
+            return true;
         } catch (err) {
             throw new Error("Error: ", err)
         }

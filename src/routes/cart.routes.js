@@ -28,14 +28,14 @@ routerCart.get("/:cid", async (req, res) => {
 
 })
 
-/*routerCart.put("/:cid/product/:pid", async (req, res) => {
+routerCart.put("/:cid/product/:pid", async (req, res) => {
     try {
         const idCart = req.params.cid;
         const idProduct = req.params.pid;
-        await productManager.updateProduct(idCart, idProduct, req.body);
+        await cartManager.updateCart(idCart, idProduct, req.body);
         res.status(200).json("Product updated successfully");
     } catch (err) { res.status(404).json(`Couldn't update product: ${err.message}`); }
-})*/
+})
 
 routerCart.delete("/:cid/product/:pid", async (req, res) => {
     let cartId = req.params.cid;
