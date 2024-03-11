@@ -15,10 +15,8 @@ const initializatePassport = () => {
                 }
                 let newUser = {
                     name: userData.name,
-                    lastname: userData.lastname,
                     email: username,
                     password: createHash(username, userData.password),
-                    phone: userData.phone
                 }
                 let result = await userModel.create(newUser)
                 done(null, result)

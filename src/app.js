@@ -9,6 +9,7 @@ import http from "http";
 import { Server } from "socket.io";
 import Database from './dao/db/index.js'
 import initializatePassport from './passport/passport.js'
+import initPassport from './passport/passportGithub.js';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
 
@@ -24,6 +25,7 @@ app.use(session({
 }))
 
 initializatePassport();
+initPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -35,7 +37,7 @@ app.set('views', __dirname + "/views");
 app.use(express.json());
 app.use('/api/products', routerProd);
 app.use('/api/cart', routerCart);
-app.use('/user', routerUser);
+app.use('/api/user', routerUser);
 
 
 const io = new Server(server);

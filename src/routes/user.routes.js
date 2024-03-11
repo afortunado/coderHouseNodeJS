@@ -5,10 +5,15 @@ const routerUser = Router();
 
 let users = [];
 
+routerUser.get('/github', passport.authenticate('github', {}), (req, res) => { });
+routerUser.get('/callbackGithub', passport.authenticate('github', {}), (req, res) => {
+    req.session.user = req.user
+    return res.status(200).json({ payload: req.user });
+})
+
 routerUser.post('/register', passport.authenticate('register', { failureRedirect: '/user/failedRegister' }), (req, res) => {
     res.status(200).json("User registered")
 })
-
 routerUser.get('/failedRegister', (req, res) => {
     res.status(404).json("User failed to register")
 })
