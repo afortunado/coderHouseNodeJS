@@ -46,14 +46,4 @@ routerCart.delete("/:cid/product/:pid", async (req, res) => {
     } catch (err) { res.status(404).json(`Something went wrong: ${err.message}`) }
 })
 
-routerCart.delete("/:cid", async (req, res) => {
-    try {
-        const cartId = req.params.pid;
-        await cartManager.deleteCart(cartId);
-        res.status(200).json("Cart deleted successfully")
-    } catch (err) { res.status(404).json(`Couldn't delete product: ${err.message}`) }
-
-})
-
-
 export default routerCart;

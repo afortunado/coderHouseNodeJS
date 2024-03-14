@@ -6,7 +6,6 @@ class CartManagerMongo {
         try {
             await Cart.create({ date: new Date() });
             const carts = await Cart.find();
-            console.log(carts)
             return carts;
         } catch (err) {
             return err;
@@ -16,7 +15,6 @@ class CartManagerMongo {
     async getCartById(cartId) {
         try {
             const findCart = await Cart.findOne({ _id: cartId }).populate('products.product');
-            console.log(JSON.stringify(findCart, null, '\t'))
             if (!findCart) {
                 throw new Error("Cart not founded");
             }
@@ -65,14 +63,6 @@ class CartManagerMongo {
         }
     }
 
-    async deleteCart(cartId) {
-        try {
-            await Cart.deleteOne({ _id: cartId })
-            return true;
-        } catch (err) {
-            throw new Error("Error: ", err)
-        }
-    }
 };
 
 export default CartManagerMongo;

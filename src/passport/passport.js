@@ -1,10 +1,10 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import userModel from '../dao/db/models/userModel.js';
-import createHash from '../utils/bcrypt.js'
+import { createHash } from '../utils/bcrypt.js'
 
 const initializatePassport = () => {
-    passport.use('register', new LocalStrategy)(
+    passport.use('register', new LocalStrategy(
         { usernameField: 'email', passReqToCallback: true },
         async (req, username, password, done) => {
             try {
@@ -20,8 +20,8 @@ const initializatePassport = () => {
                 }
                 let result = await userModel.create(newUser)
                 done(null, result)
-            } catch (err) { done('Error creating user' + err) }
-        });
+            } catch (err) { done('Error creating user: ' + err) }
+        }));
 
     passport.serializeUser((user, done) => {
         done(null, user._id)

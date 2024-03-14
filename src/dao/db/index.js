@@ -6,7 +6,7 @@ export default {
             .then(() => {
                 console.log("Data base connected")
             }).catch((err) => {
-                console.log("error: ", err)
+                throw new Error("Couldn't connect DB : " + err)
             })
     }
 }

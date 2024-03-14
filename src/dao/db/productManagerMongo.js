@@ -1,4 +1,4 @@
-import Product from '../db/models/productModel.js'
+import Product from '../db/models/productModel.js';
 
 class ProductManagerMongo {
 
@@ -25,11 +25,11 @@ class ProductManagerMongo {
             }
 
             let pagination = await Product.paginate(findProduct, { limit: limit, page: page });
-            console.log(pagination)
+
             return pagination;
 
         } catch (err) {
-            throw new Error("Error finding products: ", err)
+            throw new Error("Error finding products: " + err)
         }
     }
 
@@ -53,7 +53,6 @@ class ProductManagerMongo {
 
     async updateProduct(id, product) {
         try {
-            console.log(id, product)
             let productToUpdate = await this.getProductById(id)
 
             if (!product.title || !product.description || !product.price || !product.code || !product.stock || !product.category) {

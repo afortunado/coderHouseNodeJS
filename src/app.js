@@ -17,6 +17,8 @@ const app = express();
 const PORT = 8080 || process.env.PORT;
 const server = http.createServer(app);
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
     store: MongoStore.create({ mongoUrl: "mongodb+srv://luchomartinetti93:fortuna.3000@coderhouseproject.94gq4nr.mongodb.net/ecommerce" }),
     secret: "secretCoder",
@@ -31,8 +33,8 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + "/public"));
 app.engine('handlebars', handlebars.engine({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
 app.set('views', __dirname + "/views");
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use('/api/products', routerProd);
