@@ -4,27 +4,27 @@ class ProductManagerMongo {
 
     async getProduct(limit, page, query, sort) {
         try {
-            let category = query.category;
-            let stock = query.stock;
-            let findProduct = Product.find();
+            let { category, stock } = query;
+
+            let filters = {};
 
             if (category) {
-                findProduct = findProduct.where('category').equals(category);
+                filters.category = category;
             }
 
             if (stock === "available") {
-                findProduct = findProduct.where('stock').gt(0);
+                filters.stock = { $gt: 0 };
             } else if (stock === "unavailable") {
-                findProduct = findProduct.where('stock').eq(0);
+                filters.stock = 0;
             }
 
-            if (sort === "desc") {
-                findProduct = findProduct.sort({ price: -1 })
-            } else {
-                findProduct = findProduct.sort({ price: 1 })
-            }
+            let sortOption = (sort === "desc") ? { price: -1 } : { price: 1 };
 
-            let pagination = await Product.paginate(findProduct, { limit: limit, page: page });
+            let pagination = await Product.paginate(filters, {
+                limit: limit,
+                page: page,
+                sort: sortOption
+            });
 
             return pagination;
 
