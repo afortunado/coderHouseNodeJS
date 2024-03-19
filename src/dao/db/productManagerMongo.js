@@ -4,17 +4,16 @@ class ProductManagerMongo {
 
     async getProduct(limit, page, query, sort) {
         try {
-            let { category, stock } = query;
 
             let filters = {};
 
-            if (category) {
-                filters.category = category;
+            if (query.category) {
+                filters.category = query.category;
             }
 
-            if (stock === "available") {
+            if (query.stock === "available") {
                 filters.stock = { $gt: 0 };
-            } else if (stock === "unavailable") {
+            } else if (query.stock === "unavailable") {
                 filters.stock = 0;
             }
 
@@ -29,7 +28,7 @@ class ProductManagerMongo {
             return pagination;
 
         } catch (err) {
-            throw new Error("Error finding products: " + err)
+            throw new Error("Error finding products: " + err);
         }
     }
 
