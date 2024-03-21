@@ -18,6 +18,7 @@ routerProd.get('/', async (req, res) => {
             msg: 'Productos encontrados',
             Data: allProducts
         })
+
         /*let allProducts = await product.getProducts();
         let limit = req.query.limit;
         if (limit && !isNaN(limit)) { allProducts = allProducts.slice(0, limit); }
