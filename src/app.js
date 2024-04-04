@@ -1,9 +1,5 @@
 import express from 'express';
 import session from 'express-session'
-import routerProd from './routes/products.routes.js';
-import routerCart from './routes/cart.routes.js';
-import routerUser from './routes/user.routes.js';
-import routerChat from './routes/view.routes.js';
 import { engine } from 'express-handlebars'
 import __dirname from './utils/utils.js';
 import http from "http";
@@ -14,6 +10,7 @@ import initPassport from './passport/passportGithub.js';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
+import routerIndex from "./routes/index.routes.js"
 
 
 const app = express();
@@ -42,22 +39,17 @@ app.engine('handlebars', engine());
 app.set('views', __dirname + "/views");
 app.set('view engine', 'handlebars');
 
-
 app.use(express.json());
 
-app.use('/api/products', routerProd);
-app.use('/api/cart', routerCart);
-app.use('/api/user', routerUser);
-app.use('/api/view', routerChat);
+app.use(routerIndex)
 
 const io = new ServerSocket(server);
-io.on('connection', (socket) => {
-    console.log("User connected")
-})
 
 server.listen(PORT, () => {
     console.log("Server running on port", PORT)
     Database.connect();
 });
+
+export default io;
 
 

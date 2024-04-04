@@ -11,7 +11,7 @@ const initializatePassport = () => {
                 let userData = req.body;
                 let user = await userModel.findOne({ email: username });
                 if (user) {
-                    done('User already exist')
+                   return done('User already exist')
                 }
                 let newUser = {
                     name: userData.name,
@@ -19,8 +19,8 @@ const initializatePassport = () => {
                     password: createHash(username, userData.password),
                 }
                 let result = await userModel.create(newUser)
-                done(null, result)
-            } catch (err) { done('Error creating user: ' + err) }
+                return done(null, result)
+            } catch (err) { return done('Error creating user: ' + err) }
         }));
 
     passport.serializeUser((user, done) => {

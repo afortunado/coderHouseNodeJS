@@ -1,43 +1,49 @@
-import Cart from '../db/models/cartModel.js'
+import Cart from '../models/cartModel.js'
 
 class CartManagerMongo {
 
-    async getCart() {
+    getCart = async(req, res, next) => {
         try {
             await Cart.create({ date: new Date() });
-            const carts = await Cart.find();
-            return carts;
+            const theCart = await Cart.find();
+            return res.status(200).json(theCart);
         } catch (err) {
-            return err;
-        }
+            next(err);
+        } 
     }
 
-    async getCartById(cartId) {
+    getCartById = async(req, res, next) => {
+        const cartId = req.params.cid;
         try {
             const findCart = await Cart.findOne({ _id: cartId }).populate('products.product');
             if (!findCart) {
                 throw new Error("Cart not founded");
             }
-            return findCart;
+            return res.status(200).json(findCart);
         } catch (err) {
-            console.log("Something happened")
+            next(err);
         }
     }
 
-    async addProductToCart(cartId, productId) {
+    addProductToCart = async(req, res, next) => {
+        let cartId = req.params.cid;
+        let productId = req.params.pid;
         try {
             let currentCart = await Cart.findById(cartId);
             currentCart.products.push({ product: productId });
 
             await currentCart.save();
 
-            return currentCart;
+            return res.status(200).json(currentCart);
         } catch (err) {
-            console.error('Error creating cart: ' + err.message);
+            next(err);
         }
     }
 
-    async updateCart(idCart, idProduct, quantity) {
+    updateCart = async(req, res, next)=> {
+            const idCart = req.params.cid;
+            const idProduct = req.params.pid;
+            const quantity = req.body;
         try {
             let currentCart = await Cart.findById(idCart);
             let existingProduct = currentCart.products.find(e => e.product.equals(idProduct));
@@ -45,21 +51,23 @@ class CartManagerMongo {
 
             await currentCart.save();
 
-            return currentCart;
-        } catch (err) { throw new Error(err) }
+            return res.status(200).json(currentCart);
+        } catch (err) { next(err) }
     }
 
-    async deleteCartProduct(cartId, productId) {
+    deleteCartProduct = async(req, res, next) => {
+        let cartId = req.params.cid;
+        let productId = req.params.pid;
         try {
             let currentCart = await Cart.findById(cartId);
             let newCart = await currentCart.products.deleteOne({ _id: productId })
 
             await newCart.save();
 
-            return newCart;
+            return res.status(200).json(newCart);
 
         } catch (err) {
-            console.error('Error deleting product: ' + err.message);
+            next(err);
         }
     }
 
