@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { correctPassword } from "../utils/bcrypt.js"
-import passport from "passport";
+import UserManagerMongo from "../dao/db/controllers/userManagerMongo.js";
 const routerUser = Router();
+const userManager = new UserManagerMongo;
 
+routerUser.get('/:pid', userManager.getUserById);
 
-
-
+routerUser.post('/', userManager.addUser);
 
 export default routerUser;

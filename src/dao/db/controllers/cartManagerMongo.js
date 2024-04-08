@@ -24,7 +24,7 @@ class CartManagerMongo {
             next(err);
         }
     }
-
+ 
     addProductToCart = async(req, res, next) => {
         let cartId = req.params.cid;
         let productId = req.params.pid;

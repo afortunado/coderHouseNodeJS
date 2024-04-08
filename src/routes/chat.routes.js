@@ -1,17 +1,10 @@
 import { Router } from "express";
-import io from "../app.js"
+import MessageManagerMongo from "../dao/db/controllers/messageManagerMongo.js"
 const routerChat = Router();
+const chatManager = new MessageManagerMongo;
 
-routerChat.get('/', (req, res) => {
-    res.render("chat", {})
-});
+routerChat.get('/', chatManager.getMessage);
 
-routerChat.post('/', (req, res) => {
-    const message = req.body.message;
-
-    io.emit('new-message', message);
-
-    res.status(200).json({ message: 'Mensaje guardado correctamente' });
-});
+routerChat.post('/', chatManager.postMessage);
 
 export default routerChat;

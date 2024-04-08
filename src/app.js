@@ -1,14 +1,14 @@
 import express from 'express';
 import session from 'express-session'
 import { engine } from 'express-handlebars'
-import __dirname from './utils/utils.js';
+import __dirname from './views/dirname.js';
 import http from "http";
 import { Server as ServerSocket } from "socket.io";
 import Database from './dao/db/index.js'
 import initializatePassport from './passport/passport.js'
 import initPassport from './passport/passportGithub.js';
 import passport from 'passport';
-import MongoStore from 'connect-mongo';
+import MongoStore from 'connect-mongo'; 
 import cookieParser from 'cookie-parser';
 import routerIndex from "./routes/index.routes.js"
 
@@ -33,11 +33,11 @@ initPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname));
 
 app.engine('handlebars', engine());
-app.set('views', __dirname + "/views");
 app.set('view engine', 'handlebars');
+app.set('views', __dirname);
 
 app.use(express.json());
 
