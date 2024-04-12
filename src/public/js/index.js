@@ -1,15 +1,30 @@
 import io from "./app.js"
 const socket = io();
 
-socket.on('new-message', (msg) => {
+socket.on('the-messege', (msg) => {
     console.log('Nuevo mensaje recibido:', msg);
     displayMessage(msg);
+    let chat = document.getElementById("box")
+    chat.scrollTop = chat.scrollHeight;
 });
+
+const displayMessage = (msg) => {
+    const html = msg.map(data => {
+        return (
+            `
+            <div>
+                <strong>${data.author}</strong> dice <p>${data.text}</p>
+            </div>
+            `
+        )
+    }).join(' ')
+    document.getElementById('box').innerHTML = html;
+}
 
 const sendMessage = async () => {
     const author = document.getElementById("name").value.trim();
     const text = document.getElementById("message").value.trim();
-
+console.log(auth)
     if(!author || !text){
         alert("Name and text are required!")
         return false
@@ -34,13 +49,4 @@ const sendMessage = async () => {
         throw new Error('Error al enviar el mensaje:', error);
     }
 };
- 
-const displayMessage = (msg) => {
-    const messageInfo = document.getElementById('box');
-    messageInfo.innerText = `${msg.author}: ${msg.text}`;
-}
 
-document.getElementById("chatForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    await sendMessage();
-});

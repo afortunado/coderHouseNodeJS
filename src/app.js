@@ -11,6 +11,7 @@ import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import routerIndex from "./routes/index.routes.js"
 
+let arrMessage = [];
 
 const app = express();
 const PORT = 8080 || process.env.PORT;
@@ -46,7 +47,8 @@ io.on('connection', (socket) => {
     console.log('A user connected');
     
     socket.on('new-message', (msg) => {
-        console.log('New message:', msg);
+        arrMessage.push(msg)
+        io.sockets.emit("the-message", arrMessage)
     });
 });
 

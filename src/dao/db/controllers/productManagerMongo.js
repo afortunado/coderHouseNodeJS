@@ -1,7 +1,7 @@
 import Product from '../models/productModel.js';
 
 class ProductManagerMongo {
-
+    static async getProduct (req, res, next) {}
     static async getProduct (req, res, next) {
         const { limit = 10, page = 1, sort = "", category = "" } = req.query;
 
@@ -17,7 +17,7 @@ class ProductManagerMongo {
             let pagination = await Product.paginate(filters, options);
             return res.render("products", { productos: pagination.docs });
             /*return res.status(200).json({
-                msg: 'Productos encontrados',
+                msg: 'Products founded',
                 Data: pagination
             })*/
         } catch (err) {
