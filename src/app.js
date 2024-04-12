@@ -1,12 +1,11 @@
 import express from 'express';
 import session from 'express-session'
 import { engine } from 'express-handlebars'
-import __dirname from './views/dirname.js';
+import __dirname from './dirname.js';
 import http from "http";
 import { Server as ServerSocket } from "socket.io";
 import Database from './dao/db/index.js'
 import initializatePassport from './passport/passport.js'
-import initPassport from './passport/passportGithub.js';
 import passport from 'passport';
 import MongoStore from 'connect-mongo'; 
 import cookieParser from 'cookie-parser';
@@ -29,21 +28,27 @@ app.use(session({
 app.use(cookieParser())
 
 initializatePassport();
-initPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname+"/public"));
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.set('views', __dirname);
+app.set('views', __dirname+"/views");
 
 app.use(express.json());
 
 app.use(routerIndex)
 
 const io = new ServerSocket(server);
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    
+    socket.on('new-message', (msg) => {
+        console.log('New message:', msg);
+    });
+});
 
 server.listen(PORT, () => {
     console.log("Server running on port", PORT)

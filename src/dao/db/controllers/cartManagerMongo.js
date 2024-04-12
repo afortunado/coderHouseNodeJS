@@ -2,7 +2,7 @@ import Cart from '../models/cartModel.js'
 
 class CartManagerMongo {
 
-    getCart = async(req, res, next) => {
+    static async getCart(req, res, next) {
         try {
             await Cart.create({ date: new Date() });
             const theCart = await Cart.find();
@@ -12,26 +12,24 @@ class CartManagerMongo {
         } 
     }
 
-    getCartById = async(req, res, next) => {
+    static async getCartById(req, res, next) {
         const cartId = req.params.cid;
         try {
             const findCart = await Cart.findOne({ _id: cartId }).populate('products.product');
-            if (!findCart) {
-                throw new Error("Cart not founded");
-            }
             return res.status(200).json(findCart);
         } catch (err) {
             next(err);
         }
     }
  
-    addProductToCart = async(req, res, next) => {
+    static async addProductToCart(req, res, next) {
         let cartId = req.params.cid;
         let productId = req.params.pid;
         try {
             let currentCart = await Cart.findById(cartId);
+            
             currentCart.products.push({ product: productId });
-
+            
             await currentCart.save();
 
             return res.status(200).json(currentCart);
@@ -40,7 +38,7 @@ class CartManagerMongo {
         }
     }
 
-    updateCart = async(req, res, next)=> {
+    static async updateCart(req, res, next) {
             const idCart = req.params.cid;
             const idProduct = req.params.pid;
             const quantity = req.body;
@@ -55,7 +53,7 @@ class CartManagerMongo {
         } catch (err) { next(err) }
     }
 
-    deleteCartProduct = async(req, res, next) => {
+    static async deleteCartProduct(req, res, next) {
         let cartId = req.params.cid;
         let productId = req.params.pid;
         try {

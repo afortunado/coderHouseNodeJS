@@ -1,10 +1,10 @@
 import { Router } from "express";
 import UserManagerMongo from "../dao/db/controllers/userManagerMongo.js";
 const routerUser = Router();
-const userManager = new UserManagerMongo;
+const { getUserById, addUser } = UserManagerMongo;
 
-routerUser.get('/:pid', userManager.getUserById);
+routerUser.get('/:pid', getUserById);
 
-routerUser.post('/', userManager.addUser);
+routerUser.post('/', addUser);
 
 export default routerUser;

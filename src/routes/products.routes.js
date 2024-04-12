@@ -3,17 +3,16 @@ import { Router } from "express";
 //const product = new ProductManager('productFile.json');
 import ProductManagerMongo from "../dao/db/controllers/productManagerMongo.js";
 const routerProd = Router();
-const productManager = new ProductManagerMongo();
+const { getProduct, getProductById, addProduct, updateProduct, deleteProduct } = ProductManagerMongo;
 
+routerProd.get("/", getProduct);
 
-routerProd.get("/", productManager.getProduct);
+routerProd.get('/:pid', getProductById);
 
-routerProd.get('/:pid', productManager.getProductById);
+routerProd.post('/', addProduct);
 
-routerProd.post('/', productManager.addProduct);
+routerProd.put('/:pid', updateProduct);
 
-routerProd.put('/:pid', productManager.updateProduct);
-
-routerProd.delete('/:pid', productManager.deleteProduct);
+routerProd.delete('/:pid', deleteProduct);
 
 export default routerProd;

@@ -2,7 +2,7 @@
 
  class UserManagerMongo {
 
-    addUser = async(req, res, next) => {
+    static async addUser(req, res, next) {
         const newUser = req.body;
         try {
             let userCreated = User.create(newUser);
@@ -10,7 +10,7 @@
         } catch(err){ next(err) };
     };
 
-    getUserById = async(req, res, next) => {
+    static async getUserById(req, res, next) {
         const userId = req.params.uid;
         try {
             let user = User.findOne({ _id: userId });

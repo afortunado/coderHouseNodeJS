@@ -2,33 +2,30 @@ import Product from '../models/productModel.js';
 
 class ProductManagerMongo {
 
-    getProduct = async(req, res, next) => {
+    static async getProduct (req, res, next) {
         const { limit = 10, page = 1, sort = "", category = "" } = req.query;
 
         try {
- 
             let filters = {stock: { $gt: 0 } };
 
             if (category) {filters.category = query.category;}
 
             let options =  { limit: parseInt(limit), page: parseInt(page)}
-            
+
             if(sort){ price.sort = { price: sort === "desc" ? -1 : 1 }};
 
             let pagination = await Product.paginate(filters, options);
-
-            return res.status(200).json({
+            return res.render("products", { productos: pagination.docs });
+            /*return res.status(200).json({
                 msg: 'Productos encontrados',
                 Data: pagination
-            })
-
-
+            })*/
         } catch (err) {
             next(err);
         }
     }
 
-    getProductById = async(req, res, next) => {
+    static async getProductById (req, res, next) {
             let productId = req.params.pid;
         try {
             let singleProduct = await Product.findOne({ _id: productId })
@@ -38,7 +35,7 @@ class ProductManagerMongo {
         }
     }
 
-    addProduct = async(req, res, next) => {
+    static async addProduct (req, res, next) {
         const newProd = req.body
         try {
             let productAdded = await Product.create(newProd)
@@ -48,7 +45,7 @@ class ProductManagerMongo {
         }
     }
 
-    updateProduct = async(req, res, next) => {
+    static async updateProduct (req, res, next) {
             const idProduct = req.params.pid;
             const product = req.body;
         try {
@@ -78,7 +75,7 @@ class ProductManagerMongo {
         }
     }
 
-    deleteProduct = async(req, res, next) => {
+    static async deleteProduct (req, res, next) {
             const idProduct = req.params.pid;
         try {
             let deletedProduct = await Product.deleteOne({ _id: idProduct })

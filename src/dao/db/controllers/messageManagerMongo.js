@@ -3,9 +3,9 @@ import io from "../../../app.js"
  
 class MessageManagerMongo {
 
-    getMessage = async(req, res, next) => { res.render("chat", {}) };
+    static async getMessage(req, res, next) { res.render("chat", {}) };
 
-    postMessage = async(req, res, next) => {
+    static async postMessage(req, res, next) {
         const message = req.body.message;
 
         io.emit('new-message', message);

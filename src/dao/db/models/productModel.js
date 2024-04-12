@@ -5,15 +5,15 @@ const ProductSchema = new mongoose.Schema({
     title: {
         type: String,
         unique: true,
-        require: true
+        required: true
     },
     description: {
         type: String,
-        require: true
+        required: true
     },
     price: {
         type: Number,
-        require: true
+        required: true
     },
     thumbnail: {
         type: Array
@@ -21,17 +21,17 @@ const ProductSchema = new mongoose.Schema({
     code: {
         type: Number,
         unique: true,
-        require: true
+        required: true
     },
     stock: {
         type: Number,
-        require: true,
+        required: true,
         default: 0,
         index: true
     },
     category: {
         type: String,
-        require: true,
+        required: true,
         enum: ["food", "drinks", "stuff"],
         index: true
     },
@@ -40,7 +40,7 @@ const ProductSchema = new mongoose.Schema({
         default: true
     },
     quantity: {
-        type: Number,
+        type: String,
         default: 0
     }
 });
