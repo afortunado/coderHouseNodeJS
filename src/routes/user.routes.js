@@ -1,5 +1,5 @@
 import { Router } from "express";
-import UserManagerMongo from "../dao/db/controllers/userManagerMongo.js";
+import UserManagerMongo from "../dao/db/managers/userManagerMongo.js";
 const routerUser = Router();
 const { getUserById, addUser } = UserManagerMongo;
 

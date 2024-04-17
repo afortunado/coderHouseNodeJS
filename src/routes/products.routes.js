@@ -1,9 +1,8 @@
 import { Router } from "express";
 //import ProductManager from '../dao/fileSystem/productManager.js';
 //const product = new ProductManager('productFile.json');
-import ProductManagerMongo from "../dao/db/controllers/productManagerMongo.js";
+import { getProduct, getProductById, addProduct, updateProduct, deleteProduct } from '../controllers/productControllers.js';
 const routerProd = Router();
-const { getProduct, getProductById, addProduct, updateProduct, deleteProduct } = ProductManagerMongo;
 
 routerProd.get("/", getProduct);
 

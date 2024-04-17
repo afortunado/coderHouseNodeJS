@@ -1,15 +1,11 @@
 import Cart from '../models/cartModel.js'
 
-class CartManagerMongo {
+const cartService = {}
 
-    static async getCart(req, res, next) {
-        try {
-            await Cart.create({ date: new Date() });
-            const theCart = await Cart.find();
-            return res.status(200).json(theCart);
-        } catch (err) {
-            next(err);
-        } 
+     cartService.getCart = async (query) => {
+        await Cart.create({ date: new Date() })
+        const theCart = await Cart.find();
+        return theCart;
     }
 
     static async getCartById(req, res, next) {
@@ -68,7 +64,5 @@ class CartManagerMongo {
             next(err);
         }
     }
-
-};
 
 export default CartManagerMongo;

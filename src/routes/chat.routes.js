@@ -1,5 +1,5 @@
 import { Router } from "express";
-import MessageManagerMongo from "../dao/db/controllers/messageManagerMongo.js"
+import MessageManagerMongo from "../dao/db/managers/messageManagerMongo.js"
 const routerChat = Router();
 const { getMessage, postMessage } = MessageManagerMongo;
 
