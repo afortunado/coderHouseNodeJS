@@ -1,13 +1,12 @@
 import Messages from "../models/messages.model.js";
-import io from "../../../app.js"
- 
-class MessageManagerMongo {
 
-    static async getMessage(req, res, next) { };
+const chatService = {};
 
-    static async postMessage(req, res, next) {
-    };
+chatService.getMessage = async(msg) => { 
 
 };
- 
-export default MessageManagerMongo;
+
+chatService.postMessage = async() => {
+};
+
+export default chatService;

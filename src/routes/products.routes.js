@@ -1,10 +1,11 @@
 import { Router } from "express";
 //import ProductManager from '../dao/fileSystem/productManager.js';
 //const product = new ProductManager('productFile.json');
-import { getProduct, getProductById, addProduct, updateProduct, deleteProduct } from '../controllers/productControllers.js';
+import { getProductById, addProduct, updateProduct, deleteProduct } from '../controllers/productControllers.js';
+import { getProductAndRender } from "../utils/middlewares.js";
 const routerProd = Router();
 
-routerProd.get("/", getProduct);
+routerProd.get("/", getProductAndRender);
 
 routerProd.get('/:pid', getProductById);
 

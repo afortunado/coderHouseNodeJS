@@ -2,8 +2,9 @@ import productService from '../dao/db/managers/productManagerMongo.js';
 
 export const getProduct = async (req, res, next) => {
     try {
-        const productos = await productService.getProduct(req.query);
-        return res.status(200).json(productos);
+        const products = await productService.getProduct(req.query);
+        res.status(200).json(products);
+        return products;
     } catch (error) {
         next(error);
     }

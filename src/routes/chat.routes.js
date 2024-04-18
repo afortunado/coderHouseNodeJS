@@ -1,10 +1,9 @@
 import { Router } from "express";
-import MessageManagerMongo from "../dao/db/managers/messageManagerMongo.js"
+//import { getMessage, postMessage } from "../controllers/chatControllers.js"
 const routerChat = Router();
-const { getMessage, postMessage } = MessageManagerMongo;
 
-routerChat.get('/', getMessage);
+//routerChat.get('/', getMessage);
 
-routerChat.post('/', postMessage);
+//routerChat.post('/', postMessage);
 
 export default routerChat;
