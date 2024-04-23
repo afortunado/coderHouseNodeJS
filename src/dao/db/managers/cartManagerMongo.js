@@ -1,4 +1,5 @@
 import Cart from '../models/cartModel.js'
+import Ticket from '../models/ticketModel.js'
 
 const cartService = {}
 
@@ -15,6 +16,11 @@ cartService.deleteCartProduct = async(cartId, productId) => {
         let currentCart = await Cart.findById(cartId);
         let newCart = await currentCart.products.deleteOne({ _id: productId })
         return newCart;
+}
+
+cartService.createTicket = async(cart) => {
+        await Ticket.create({ })
+        return 
 }
 
 export default cartService;

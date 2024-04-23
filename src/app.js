@@ -44,7 +44,7 @@ app.use(routerIndex)
 
 const io = new ServerSocket(server);
 io.on('connection', (socket) => {
-    console.log('A user connected');
+    console.log('User connected');
     
     socket.on('new-message', (msg) => {
         arrMessage.push(msg)

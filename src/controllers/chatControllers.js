@@ -1,20 +1,21 @@
-/*import chatService from "../dao/db/managers/messageManagerMongo.js";
+import chatService from '../dao/db/managers/messageManagerMongo.js';
 
-export const getMessage = async(req, res, next) => {
-
+export const getMessage = async (req, res, next) => {
+    try {
+        const msg = await chatService.getMessage();
+        res.status(200).json(msg);
+        return msg;
+    } catch (error) {
+        next(error);
+    }
 };
-
+ 
 export const postMessage = async(req, res, next) => {
-
-};
-
-import io from "../app.js"
-
-res.render("chat", {})
-
-
-const message = req.body.message;
-
-io.emit('new-message', message);
-
-res.status(200).json({ message: 'Mensaje guardado correctamente' });*/
+        const { user, message } = req.body;
+        try {
+            const msgAdded = await chatService.addMessage(user, message);
+            return res.status(200).json(msgAdded);
+        } catch (error) {
+            next(error);
+        }
+}

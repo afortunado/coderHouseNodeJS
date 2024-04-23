@@ -63,3 +63,14 @@ export const deleteCartProduct = async(req, res, next) => {
         next(err);
     }
 }
+
+export const createTicket = async(req, res, next) => {
+    const cartId = req.params.cid;
+    try {
+        const cart = await cartService.getCartById(cartId);
+        const ticket = await cartService.createTicket(cart);
+        return res.status(200).json(ticket)
+    } catch(error){
+        next(error)
+    }
+}
