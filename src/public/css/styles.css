@@ -1,3 +1,4 @@
 .boxx{
     height: 50vh;
+    overflow: scroll;
 }

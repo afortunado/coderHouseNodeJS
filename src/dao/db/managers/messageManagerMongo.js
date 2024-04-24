@@ -7,7 +7,7 @@ chatService.getMessage = async() => {
 };
  
 chatService.addMessage = async (user, msg) => {
-    return Messages.create({ user, message: msg });
+    return Messages.create({ user, msg });
 };
 
-export default chatService;
+export default chatService; 

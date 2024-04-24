@@ -11,8 +11,6 @@ import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import routerIndex from "./routes/index.routes.js"
 
-let arrMessage = [];
-
 const app = express();
 const PORT = 8080 || process.env.PORT;
 const server = http.createServer(app);
@@ -43,14 +41,6 @@ app.use(express.json());
 app.use(routerIndex)
 
 const io = new ServerSocket(server);
-io.on('connection', (socket) => {
-    console.log('User connected');
-    
-    socket.on('new-message', (msg) => {
-        arrMessage.push(msg)
-        io.sockets.emit("the-message", arrMessage)
-    });
-});
 
 server.listen(PORT, () => {
     console.log("Server running on port", PORT)
@@ -58,5 +48,5 @@ server.listen(PORT, () => {
 });
 
 export default io;
-
+ 
 

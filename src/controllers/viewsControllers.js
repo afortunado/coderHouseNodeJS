@@ -1,6 +1,3 @@
-import io from "../app.js"
-const socket = io();
- 
 export const renderProducts = async(req, res, next) => {
     try{
           const response = await fetch('http://localhost:8080/api/products'); 
@@ -14,20 +11,15 @@ export const renderProducts = async(req, res, next) => {
         }
   }
 
-export const renderChat = async (req, res, next) => {
+export const renderMsg = async (req, res, next) => {
   try {
-      const author = req.body.user;
-      const message = req.body.message;
-  
-      if (!author || !message) {
-        return res.status(400).json({ error: "Name and text are required!" });
-      }
-    const msg = { user: author, message: message}
-    
-    socket.emit("new-message", msg);
- 
-    res.render("chat", { msg });
+    const messagesResponse = await fetch('http://localhost:8080/api/chat');
+    if (!messagesResponse.ok) {
+      res.status(500).send('Fetch error');
+    }
+    const messages = await messagesResponse.json();
+    res.render("chat", {messages});
   } catch (error) {
     next(error);
   }
-};
+}
