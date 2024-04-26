@@ -13,13 +13,13 @@ export const renderProducts = async(req, res, next) => {
 
 export const renderMsg = async (req, res, next) => {
   try {
-    const messagesResponse = await fetch('http://localhost:8080/api/chat');
-    if (!messagesResponse.ok) {
+    const response = await fetch('http://localhost:8080/api/chat');
+    if (!response.ok) {
       res.status(500).send('Fetch error');
     }
-    const messages = await messagesResponse.json();
-    res.render("chat", {messages});
+    const messages = await response.json();
+    res.render("chat", { messages });
   } catch (error) {
     next(error);
   }
-}
+};

@@ -4,7 +4,13 @@
   </h1>
 </div>
 <form onsubmit="return sendMsg()" id="chatForm"> 
-  <div id="box" class="boxx"></div>
+  <div id="box" class="boxx">
+    <div>
+     {{#each messages}}
+       <strong>{{this.user}}</strong> dice: <p>{{this.message}}</p>
+   {{/each}}
+</div>
+  </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Your name here:</label>
     <input type="text" class="form-control" id="name" aria-describedby="emailHelp">

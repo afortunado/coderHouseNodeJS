@@ -1,13 +1,14 @@
 import Messages from "../models/messages.model.js";
 
 const chatService = {};
- 
-chatService.getMessage = async() => { 
+
+chatService.addMessage = async (user) => {
+    return await Messages.create(user);
+};
+
+chatService.getMessage = async() => {
     return await Messages.find();
 };
- 
-chatService.addMessage = async (user, msg) => {
-    return Messages.create({ user, msg });
-};
+
 
 export default chatService; 

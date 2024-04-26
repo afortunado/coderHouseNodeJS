@@ -1,21 +1,14 @@
-const renderMsg = async (req, res, next) => {
-  try {
-    const messagesResponse = await fetch('http://localhost:8080/api/chat');
-    if (!messagesResponse.ok) {
-      res.status(500).send('Fetch error');
-    }
-    const messages = await messagesResponse.json();
-    res.render("chat", {messages});
-  } catch (error) {
-    next(error);
-  }
-}
+const socket = io();
+
+socket.on('newMessage', (message) => {
+    console.log('New message received:', message);
+});
 
 const sendMsg = async() => {
-   const author = document.getElementById("name").value.trim()
-   const text = document.getElementById("message").value.trim()
+   const user = document.getElementById("name").value.trim()
+   const message = document.getElementById("message").value.trim()
 
-  if (!author || !text) {
+  if (!user || !message) {
     alert("Name and message are required!");
     return;
   } 
@@ -25,7 +18,7 @@ const sendMsg = async() => {
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ author, text })
+          body: JSON.stringify({ user, message })
     });
     if (!response.ok) {
       throw new Error('Failed to save message');
@@ -33,7 +26,6 @@ const sendMsg = async() => {
     document.getElementById("name").value = "";
     document.getElementById("message").value = "";
 
-    await renderMsg();
   } catch (error) {
     console.error('Error saving message:', error);
   }

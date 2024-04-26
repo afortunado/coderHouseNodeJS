@@ -4,7 +4,6 @@ export const getProduct = async (req, res, next) => {
     try {
         const products = await productService.getProduct(req.query);
         res.status(200).json(products);
-        return products;
     } catch (error) {
         next(error);
     }
@@ -14,7 +13,7 @@ export const getProductById = async (req, res, next) => {
     const productId = req.params.pid;
     try {
         const singleProduct = await productService.getProductById(productId);
-        return res.status(200).json(singleProduct);
+        res.status(200).json(singleProduct);
     } catch (error) {
         next(error);
     }
@@ -24,7 +23,7 @@ export const addProduct = async (req, res, next) => {
     const newProd = req.body;
     try {
         const productAdded = await productService.addProduct(newProd);
-        return res.status(200).json(productAdded);
+        res.status(200).json(productAdded);
     } catch (error) {
         next(error);
     }
@@ -35,7 +34,7 @@ export const updateProduct = async (req, res, next) => {
     const product = req.body;
     try {
         const productUpdated = await productService.updateProduct(idProduct, product);
-        return res.status(200).json(productUpdated);
+        res.status(200).json(productUpdated);
     } catch (error) {
         next(error);
     }
@@ -45,7 +44,7 @@ export const deleteProduct = async (req, res, next) => {
     const idProduct = req.params.pid;
     try {
         const deletedProduct = await productService.deleteProduct(idProduct);
-        return res.status(200).json(deletedProduct);
+        res.status(200).json(deletedProduct);
     } catch (error) {
         next(error);
     }
