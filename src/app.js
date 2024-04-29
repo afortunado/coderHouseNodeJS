@@ -24,11 +24,12 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.use(cookieParser())
 
-initializatePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+initializatePassport();
+
+app.use(cookieParser())
 
 app.use(express.static(__dirname+"/public"));
 

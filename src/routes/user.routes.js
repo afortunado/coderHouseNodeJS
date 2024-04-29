@@ -1,10 +1,15 @@
 import { Router } from "express";
-import UserManagerMongo from "../dao/db/managers/userManagerMongo.js";
+import { getUserById, addUser, loginUser, createSession } from "../controllers/userControllers.js";
+import passport from 'passport'
 const routerUser = Router();
-const { getUserById, addUser } = UserManagerMongo;
 
-routerUser.get('/:pid', getUserById);
+routerUser.get('/:uid', getUserById);
 
-routerUser.post('/', addUser);
+routerUser.post('/register', passport.authenticate('register', { }));
+
+routerUser.post('/register/github', passport.authenticate('github', { }));
+routerUser.get('/callbackGithub', passport.authenticate('github', { }), createSession);
+
+routerUser.post("/login", loginUser)
 
 export default routerUser;

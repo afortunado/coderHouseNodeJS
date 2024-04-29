@@ -9,7 +9,7 @@ export const renderProducts = async(req, res, next) => {
         } catch (error) {
           next(error)
         }
-  }
+}
 
 export const renderMsg = async (req, res, next) => {
   try {

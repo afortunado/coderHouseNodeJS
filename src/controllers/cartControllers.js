@@ -18,37 +18,17 @@ export const getCartById = async(req, res, next) => {
         next(err);
     }
 }
-
+ 
 export const addProductToCart = async(req, res, next) =>{
-    let cartId = req.params.cid;
-    let productId = req.params.pid;
-
+    let idCart = req.params.cid;
+    let idProduct = req.params.pid;
     try {
-        const currentCart = await cartService.getCartById(cartId);
-        currentCart.products.push({ product: productId });
-    
-        await currentCart.save();
-
-        return res.status(200).json(currentCart);
+        const updatedCart = await cartService.addProductToCart(idCart, idProduct)
+        return res.status(200).json(updatedCart);
     } catch (err) {
         next(err);
     }
 } 
-
-export const updateCart = async(req, res, next) => {
-    const idCart = req.params.cid;
-    const idProduct = req.params.pid;
-    const quantity = req.body;
-try {
-    const currentCart = await cartService.getCartById(idCart)
-    let existingProduct = currentCart.products.find(e => e.product.equals(idProduct));
-    existingProduct.quantity += quantity.quantity;
-
-    await currentCart.save();
-
-    return res.status(200).json(currentCart);
-    } catch (err) { next(err) }
-}
 
 export const deleteCartProduct = async(req, res, next) => {
     let cartId = req.params.cid;
@@ -62,6 +42,15 @@ export const deleteCartProduct = async(req, res, next) => {
     } catch (err) {
         next(err);
     }
+}
+
+export const deleteAllProducts = async(req,res,next) => {
+    let cartId = req.params.cid;
+     try {
+        const newCart = await cartService.deleteAllProducts(cartId);
+        await newCart.save();
+        return res.status(200).json(newCart);
+    }catch(err){ next(err);}
 }
 
 export const createTicket = async(req, res, next) => {

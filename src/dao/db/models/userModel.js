@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -15,9 +15,8 @@ const UserSchema = new mongoose.Schema({
         require: true
     },
     idCart: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: "Cart",
-        required: true
     }
 },
     {

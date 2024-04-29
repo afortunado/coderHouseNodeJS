@@ -1,24 +1,18 @@
- import User from "../models/userModel.js"
+import User from "../models/userModel.js"
 
- class UserManagerMongo {
+const userService = {};
 
-    static async addUser(req, res, next) {
-        const newUser = req.body;
-        try {
-            let userCreated = User.create(newUser);
-            return res.status(200).json(userCreated);
-        } catch(err){ next(err) };
+userService.addUser = async(newUser) => {
+   return await User.create(newUser);
+}
+
+userService.getUserById = async(userId) => {
+    return await User.findOne({ _id: userId });
     };
 
-    static async getUserById(req, res, next) {
-        const userId = req.params.uid;
-        try {
-            let user = User.findOne({ _id: userId });
-            return res.status(200).json(user);
-        } catch(err){ next(err); }
-    };
+userService.getUserByEmail = async(userEmail) => {
+    return await User.findOne({ email: userEmail})
+}
 
- };
-
- export default UserManagerMongo;
+export default userService;
 
