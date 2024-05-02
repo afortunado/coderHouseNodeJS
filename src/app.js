@@ -24,10 +24,9 @@ app.use(session({
     saveUninitialized: true
 }))
 
-
+initializatePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-initializatePassport();
 
 app.use(cookieParser())
 

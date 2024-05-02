@@ -1,8 +1,9 @@
 import User from "../models/userModel.js"
 
 const userService = {};
-
-userService.addUser = async(newUser) => {
+ 
+userService.addUser = async(email, pass) => {
+   const newUser = { email, password: pass}
    return await User.create(newUser);
 }
 

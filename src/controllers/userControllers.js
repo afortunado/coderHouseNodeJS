@@ -1,11 +1,15 @@
  import userService from "../dao/db/managers/userManagerMongo.js";
- import { correctPassword } from "../utils/bcrypt.js";
+ import { createHash, correctPassword } from "../utils/bcrypt.js";
 
  export const addUser = async(req, res, next) => {
-    const newUser = req.body;
+    const newUser = req.body; 
+    let hashedPassword = await createHash(newUser.password)
     try {
-        let userCreated = await userService.addUser(newUser)
-        res.status(200).json(userCreated);
+        let userFounded = await userService.getUserByEmail(newUser.email)
+        if(!userFounded){
+            let userCreated = await userService.addUser(newUser.email, hashedPassword)
+            res.status(200).json(userCreated);
+        } else { res.status(400).json("User already exist") }
     } catch(err){ next(err) };
 };
 
@@ -16,13 +20,13 @@ export const getUserById = async(req, res, next) => {
         res.status(200).json(user);
     } catch(err){ next(err); }
 }
- 
+
 export const loginUser = async(req, res, next) => {
-    const userLogin = req.body;
+    let {userEmail, userPassword} = req.body;
     try {
-        let userLogged = await userService.getUserByEmail(userLogin.email)
+        let userLogged = await userService.getUserByEmail(userEmail)
         if(userLogged){
-            if(!correctPassword(userLogin, userLogged.password)){ 
+            if(!correctPassword(userPassword, userLogged.password)){ 
                 res.status(400).json("User and password doesn't match")
             }
             return res.redirect("/products");
@@ -37,4 +41,4 @@ export const createSession = async(req, res, next) => {
     }catch(err){
         next(err);
     }
-} 
+}

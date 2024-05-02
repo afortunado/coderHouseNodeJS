@@ -23,3 +23,11 @@ export const renderMsg = async (req, res, next) => {
     next(error);
   }
 };
+
+export const renderRegister = async(req, res, next) => {
+    res.render("register", {})
+};
+
+export const renderLogin = async(req, res, next) => {
+  res.render("login", {})
+}; 

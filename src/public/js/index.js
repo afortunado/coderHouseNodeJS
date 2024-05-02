@@ -7,7 +7,7 @@ socket.on('newMessage', (message) => {
 const sendMsg = async() => {
    const user = document.getElementById("name").value.trim()
    const message = document.getElementById("message").value.trim()
-
+console.log(user, message)
   if (!user || !message) {
     alert("Name and message are required!");
     return;
@@ -27,8 +27,66 @@ const sendMsg = async() => {
     document.getElementById("message").value = "";
 
   } catch (error) {
-    console.error('Error saving message:', error);
+    console.error(error);
   }
 
+  return false;
+}
+
+const registerData = async() => {
+  const userEmail = document.getElementById("email").value.trim()
+  const userPassword = document.getElementById("password").value.trim()
+  if(!userEmail || !userPassword){
+    alert("Name and password are required");
+  }
+
+  try{
+      const response = await fetch('http://localhost:8080/api/user/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userEmail, userPassword })
+      });
+      
+      if(!response.ok){
+        throw new Error("Failed to save user")
+      }
+
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+
+  }catch(err){
+    console.error(err)
+  }
+  return false;
+}
+
+const loginData = async() => {
+  const userEmail = document.getElementById("emailLog").value.trim()
+  const userPassword = document.getElementById("passwordLog").value.trim()
+  if(!userEmail || !userPassword){
+    alert("Name and password are required");
+  }
+
+  try{
+      const response = await fetch('http://localhost:8080/api/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userEmail, userPassword })
+      });
+      
+      if(!response.ok){
+        throw new Error("Failed to save user")
+      }
+
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+
+  }catch(err){
+    console.error(err)
+  }
   return false;
 }
