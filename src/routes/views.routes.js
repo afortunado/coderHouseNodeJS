@@ -7,4 +7,4 @@
  viewsRouter.get("/register", renderRegister);
  viewsRouter.get("/login", renderLogin);
 
- export default viewsRouter;  
+ export default viewsRouter;

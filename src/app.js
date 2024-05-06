@@ -15,6 +15,7 @@ const app = express();
 const PORT = 8080 || process.env.PORT;
 const server = http.createServer(app);
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
@@ -35,8 +36,6 @@ app.use(express.static(__dirname+"/public"));
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', __dirname+"/views");
-
-app.use(express.json());
 
 app.use(routerIndex)
 

@@ -39,7 +39,6 @@ const registerData = async() => {
   if(!userEmail || !userPassword){
     alert("Name and password are required");
   }
-
   try{
       const response = await fetch('http://localhost:8080/api/user/register', {
         method: 'POST',
@@ -86,7 +85,25 @@ const loginData = async() => {
       document.getElementById("password").value = "";
 
   }catch(err){
-    console.error(err)
+    throw new Error(err)
   }
   return false;
+}
+
+const logoutData = async() => {
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try{
+      const response = fetch("http://localhost:8080/api/user/logout", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+          }
+        })
+
+        if(!response.ok){
+          throw new Error("Failed logout")
+        }
+
+    }catch(err){ throw new Error(err)}
+  })
 }
