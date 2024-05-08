@@ -9,7 +9,7 @@ const initializatePassport = () =>{
     passport.use('register', new LocalStrategy(
         { usernameField: 'email', passReqToCallback: true },
         async (req, username, password, done) => {
-            let userData = req.body;
+            console.log(req.body)
             try {
                 let userFounded = await userService.getUserByEmail(userData.email)
                 if(!userFounded){
@@ -18,12 +18,31 @@ const initializatePassport = () =>{
                 }else{throw new Error("User already exists")}
             } catch (err) { return done(err) }
         }));
+    
+        passport.use("github", new github.Strategy(
+            {
+                clientID: "Iv1.9966f74512fd1c87",
+                clientSecret: "d7ed9f8558da0b239ac21e1876b80921772d5b0d",
+                callbackURL: "http://localhost:8080/api/user/callbackGithub"
+            },
+            async (accesToken, refreshToken, profile, done) => {
+                try {
+                    const { email } = profile._json
+                    let user = await userModel.findOne({ email })
+                    if (!user) {
+                        user = userModel.create({
+                            email,
+                            github: profile
+                        })
+                    }
+                    return done(null, user);
+                } catch (err) { return done(err); }
+            }))
 
     passport.use('login', new LocalStrategy(
         { usernameField: 'email', passReqToCallback: true },
         async (req, username, password, done) => {
             let userData = req.body;
-            console.log(userData)
             try {
                 let userExist = await userService.getUserByEmail(userData.email)
                 if(userExist){
@@ -31,7 +50,7 @@ const initializatePassport = () =>{
                         throw new Error("User and password doesn't match")
                     }
                 }
-                req.session.email = userExist.email
+                req.session.user = userExist
                 req.session.role = (userExist.email === "adminCoder@coder.com" && userExist.password === "adminCod3r123") ? "admin" : "user";
                 return done(null, userExist);
             } catch (err) { return done(err) }
@@ -53,27 +72,3 @@ const initializatePassport = () =>{
 };
 
 export default initializatePassport;
-
-/*passport.use("github", new github.Strategy(
-    {
-        clientID: "Iv1.9966f74512fd1c87",
-        clientSecret: "d7ed9f8558da0b239ac21e1876b80921772d5b0d",
-        callbackURL: "http://localhost:8080/api/user/callbackGithub"
-    },
-    async (accesToken, refreshToken, profile, done) => {
-        try {
-            const { email } = profile._json
-            let user = await userModel.findOne({ email })
-            if (!user) {
-                user = userModel.create({
-                    email,
-                    github: profile
-                })
-            }
-            return done(null, user);
-        } catch (err) {
-            return done(err);
-        }
-    }
-))
-*/

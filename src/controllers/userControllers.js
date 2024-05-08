@@ -11,7 +11,6 @@ export const getUserById = async(req, res, next) => {
 export const logoutUser = async(req, res, next) => {
     try{
         req.session.destroy()
-        console.log("LOGOUTTTT")
         res.status(200).json("Session destroyed")
     } catch(err){
         next(err);
