@@ -1,9 +1,9 @@
 document.getElementById("submitBtn").addEventListener("click", async (event) => {
     event.preventDefault();
-    const userEmail = document.getElementById("email").value.trim()
-    const userPassword = document.getElementById("password").value.trim()
+    const email = document.getElementById("email").value.trim()
+    const password = document.getElementById("password").value.trim()
     
-    if(!userEmail || !userPassword){
+    if(!email || !password){
       alert("Name and password are required");
     }
     try{
@@ -12,7 +12,7 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ userEmail, userPassword })
+          body: JSON.stringify({ email, password })
         });
         
         if(!response.ok){

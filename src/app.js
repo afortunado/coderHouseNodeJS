@@ -8,7 +8,6 @@ import Database from './dao/db/index.js'
 import initializatePassport from './passport/passport.js'
 import passport from 'passport';
 import MongoStore from 'connect-mongo'; 
-import cookieParser from 'cookie-parser';
 import routerIndex from "./routes/index.routes.js"
 
 const app = express();
@@ -21,15 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     store: MongoStore.create({ mongoUrl: "mongodb+srv://luchomartinetti93:fortuna.3000@coderhouseproject.94gq4nr.mongodb.net/ecommerce" }),
     secret: "secretCoder",
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }))
 
 initializatePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(cookieParser())
 
 app.use(express.static(__dirname+"/public"));
 
