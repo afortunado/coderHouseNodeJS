@@ -5,7 +5,7 @@ import __dirname from './dirname.js';
 import http from "http";
 import { Server as ServerSocket } from "socket.io";
 import Database from './dao/db/index.js'
-import initializatePassport from './passport/passport.js'
+import initializatePassport from './config/passport.js'
 import passport from 'passport';
 import MongoStore from 'connect-mongo'; 
 import routerIndex from "./routes/index.routes.js"

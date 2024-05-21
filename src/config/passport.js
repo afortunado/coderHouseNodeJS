@@ -9,7 +9,7 @@ const initializatePassport = () =>{
     passport.use('register', new LocalStrategy(
         { usernameField: 'email', passReqToCallback: true },
         async (req, email, password, done) => {
-            console.log("U: ", email, "P: ", password)
+            console.log("U: ",email, "P: ",password)
             try {
                 let userFounded = await userService.getUserByEmail(email)
                 if(!userFounded){
@@ -23,11 +23,12 @@ const initializatePassport = () =>{
             {
                 clientID: "Iv1.9966f74512fd1c87",
                 clientSecret: "d7ed9f8558da0b239ac21e1876b80921772d5b0d",
-                callbackURL: "http://localhost:8080/api/user/callbackGithub"
+                callbackURL: "http://localhost:8080/api/sessions/callbackGithub"
             },
             async (accesToken, refreshToken, profile, done) => {
                 try {
-                    const { email } = profile._json
+                    console.log(profile)
+                    /*const { email } = profile._json
                     let user = await userModel.findOne({ email })
                     if (!user) {
                         user = userModel.create({
@@ -35,7 +36,7 @@ const initializatePassport = () =>{
                             github: profile
                         })
                     }
-                    return done(null, user);
+                    return done(null, user);*/
                 } catch (err) { return done(err); }
         }))
 
@@ -49,9 +50,6 @@ const initializatePassport = () =>{
                         throw new Error("User and password doesn't match")
                     }
                 }
-                console.log(`welcome, ${userExist.email}`)
-                req.session.user = userExist
-                req.session.role = (userExist.email === "adminCoder@coder.com" && userExist.password === "adminCod3r123") ? "admin" : "user";
                 return done(null, userExist);
             } catch (err) { return done(err) }
         }));

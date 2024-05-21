@@ -1,10 +1,22 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
+    firts_name: {
+        type: String,
+        require: true
+    },
+    last_name: {
+        type: String,
+        require: true
+    },
     email: {
         type: String,
-        required: true,
+        require: true,
         unique: true
+    },
+    age: {
+        type: Number,
+        require: true
     },
     password: {
         type: String,
@@ -13,6 +25,12 @@ const UserSchema = new mongoose.Schema({
     idCart: {
         type: mongoose.Types.ObjectId,
         ref: "Cart",
+    },
+    role: {
+        type: String,
+        require: true,
+        enum: ["user", "admin"],
+        default: "user"
     }
 },
     {

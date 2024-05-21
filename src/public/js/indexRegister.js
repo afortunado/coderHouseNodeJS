@@ -7,7 +7,7 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
       alert("Name and password are required");
     }
     try{
-        const response = await fetch('http://localhost:8080/api/user/register', {
+        const response = await fetch('http://localhost:8080/api/sessions/register', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
