@@ -5,6 +5,8 @@ import routerUser from './user.routes.js';
 import routerChat from './chat.routes.js';
 import routerSerssions from "./session.routes.js";
 import viewsRouter from "./views.routes.js";
+import mockRouter from "./mock.routes.js";
+import loggerRouter from "./logger.routes.js";
 
 const routerIndex = Router();
  
@@ -14,5 +16,7 @@ routerIndex.use('/api/user', routerUser);
 routerIndex.use('/api/chat', routerChat);
 routerIndex.use('/api/sessions', routerSerssions);
 routerIndex.use('/', viewsRouter);
+routerIndex.use('/', mockRouter);
+routerIndex.use("/loggerTest", loggerRouter);
 
 export default routerIndex;

@@ -7,18 +7,21 @@ import { Server as ServerSocket } from "socket.io";
 import Database from './dao/db/index.js'
 import initializatePassport from './config/passport.js'
 import passport from 'passport';
-import MongoStore from 'connect-mongo'; 
+import MongoStore from 'connect-mongo';
 import routerIndex from "./routes/index.routes.js"
+import dotenv from 'dotenv'
+import compression from 'compression';
 
 const app = express();
-const PORT = 8080 || process.env.PORT;
+const PORT = process.env.PORT || 9090;
+dotenv.config();
 const server = http.createServer(app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    store: MongoStore.create({ mongoUrl: "mongodb+srv://luchomartinetti93:fortuna.3000@coderhouseproject.94gq4nr.mongodb.net/ecommerce" }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
     secret: "secretCoder",
     resave: false,
     saveUninitialized: false
@@ -35,6 +38,8 @@ app.set('view engine', 'handlebars');
 app.set('views', __dirname+"/views");
 
 app.use(routerIndex)
+
+app.use(compression())
 
 const io = new ServerSocket(server);
 

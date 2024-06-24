@@ -11,10 +11,11 @@ const initializatePassport = () =>{
         async (req, email, password, done) => {
             console.log("U: ",email, "P: ",password)
             try {
-                let userFounded = await userService.getUserByEmail(email)
-                if(!userFounded){
-                    let userCreated = await userService.addUser(email, password)
-                    return done(null, userCreated);
+                // verificar si llega email y password
+                let user = await userService.getUserByEmail(email)
+                if(!user){
+                    user = await userService.addUser(email, password)
+                    return done(null, user);
                 }else{throw new Error("User already exists")}
             } catch (err) { return done(err) }
         }));
@@ -44,13 +45,11 @@ const initializatePassport = () =>{
         { usernameField: 'email', passReqToCallback: true },
         async (req, email, password, done) => {
             try {
+            //verificar si el mail y password llegan
                 let userExist = await userService.getUserByEmail(email)
-                if(userExist){
-                    if(!await correctPassword(password, userExist.password)){ 
-                        throw new Error("User and password doesn't match")
-                    }
-                }
-                return done(null, userExist);
+                if(!userExist || !await correctPassword(password, userExist.password)){
+                    throw new Error("User and password doesn't match")
+                }else {return done(null, userExist);}
             } catch (err) { return done(err) }
         }));
 
