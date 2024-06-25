@@ -1,0 +1,49 @@
+paths:
+  /api/products/:
+   get:
+    summary: Gets products from data base
+    tags:
+      - Products
+    responses:
+      "200": 
+        description: Successful request
+      "400":
+        description: Wrong data
+      "500":
+        description: Server error
+
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID by mongoDB
+        title:
+          type: String
+          description: name of product
+        description:
+          type: String
+          description: short description of the product
+        price:
+          type: Number
+          description: Iprice of product
+        thumbnail:
+          type: Array
+          description: array with images
+        code:
+          type: Number
+          description: product code number
+        stock:
+          type: Number
+          description: how much products are in stock
+        category:
+          type: String
+          description: categrory where the product is classified
+        status:
+          type: Boolean
+          description: can't remember what is this
+        quantity:
+          type: String
+          description: amount of product selected by customer

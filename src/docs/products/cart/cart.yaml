@@ -1,0 +1,28 @@
+paths:
+  /api/cart/:
+   post:
+    summary: creates the cart in data base
+    tags:
+      - Cart
+    responses:
+      "200": 
+        description: Successful request
+      "400":
+        description: Wrong data
+      "500":
+        description: Server error
+
+components:
+  schemas:
+    cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID by mongoDB
+        date:
+          type: Date
+          description: precise date when cart was created
+        product:
+          type: array
+          description: array of products wich had been selected by customer
