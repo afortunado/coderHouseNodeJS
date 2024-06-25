@@ -2,7 +2,7 @@ import {faker} from '@faker-js/faker'
 
 const categories = ["food", "drinks", "stuff"]
 
-export const generateProductProduct = () => {
+export const generateProduct = () => {
     return {
         title: faker.commerce.productName(),
         description: faker.commerce.productDescription(),

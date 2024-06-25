@@ -4,7 +4,7 @@ import { Command } from 'commander';
 const program = new Command();
 
 program
-    .option('-d', 'Debug variable', flase)
+    .option('-d', 'Debug variable', false)
     .option('-p', 'Port', 9090)
     .option('--mode <mode>', 'Working mode', 'develop')
 program.parse();

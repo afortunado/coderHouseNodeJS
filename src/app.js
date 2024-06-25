@@ -10,7 +10,7 @@ import passport from 'passport';
 import MongoStore from 'connect-mongo';
 import routerIndex from "./routes/index.routes.js"
 import dotenv from 'dotenv'
-import compression from 'compression';
+import compression from 'express-compression';
 
 const app = express();
 const PORT = process.env.PORT || 9090;

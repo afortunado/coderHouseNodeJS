@@ -7,6 +7,7 @@ import routerSerssions from "./session.routes.js";
 import viewsRouter from "./views.routes.js";
 import mockRouter from "./mock.routes.js";
 import loggerRouter from "./logger.routes.js";
+import apidocsRoute from "./apidocs.routes.js";
 
 const routerIndex = Router();
  
@@ -18,5 +19,6 @@ routerIndex.use('/api/sessions', routerSerssions);
 routerIndex.use('/', viewsRouter);
 routerIndex.use('/', mockRouter);
 routerIndex.use("/loggerTest", loggerRouter);
+routerIndex.use('/apidocs', apidocsRoute);
 
 export default routerIndex;
