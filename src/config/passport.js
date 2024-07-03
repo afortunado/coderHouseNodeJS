@@ -9,13 +9,12 @@ const initializatePassport = () =>{
     passport.use('register', new LocalStrategy(
         { usernameField: 'email', passReqToCallback: true },
         async (req, email, password, done) => {
-            console.log("U: ",email, "P: ",password)
             try {
-                // verificar si llega email y password
+                let { firstName, lastName, age } = req.body;
                 let user = await userService.getUserByEmail(email)
                 if(!user){
-                    user = await userService.addUser(email, password)
-                    return done(null, user);
+                    user = await userService.addUser(firstName, lastName, email, age, password)
+                    return done(null, user.email);
                 }else{throw new Error("User already exists")}
             } catch (err) { return done(err) }
         }));
@@ -45,11 +44,10 @@ const initializatePassport = () =>{
         { usernameField: 'email', passReqToCallback: true },
         async (req, email, password, done) => {
             try {
-            //verificar si el mail y password llegan
                 let userExist = await userService.getUserByEmail(email)
                 if(!userExist || !await correctPassword(password, userExist.password)){
                     throw new Error("User and password doesn't match")
-                }else {return done(null, userExist);}
+                }else {return done(null, userExist.email);}
             } catch (err) { return done(err) }
         }));
 

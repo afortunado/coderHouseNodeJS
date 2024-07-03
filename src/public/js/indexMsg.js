@@ -13,7 +13,7 @@ console.log(user, message)
     return;
   } 
   try{
-    const response = await fetch('http://localhost:8080/api/chat', {
+    const response = await fetch('http://localhost:8080/api/chat/sendMsg', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'

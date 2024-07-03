@@ -42,6 +42,11 @@ const ProductSchema = new mongoose.Schema({
     quantity: {
         type: String,
         default: 0
+    },
+    owner: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+        default: "admin"
     }
 });
 

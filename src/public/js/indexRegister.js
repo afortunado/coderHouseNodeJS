@@ -2,9 +2,12 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
     event.preventDefault();
     const email = document.getElementById("email").value.trim()
     const password = document.getElementById("password").value.trim()
+    const firstName = document.getElementById("first_name").value.trim()
+    const lastName = document.getElementById("last_name").value.trim()
+    const age = document.getElementById("age").value.trim()
     
-    if(!email || !password){
-      alert("Name and password are required");
+    if(!email || !password || !age || !firstName || !lastName){
+      alert("All info is required");
     }
     try{
         const response = await fetch('http://localhost:8080/api/sessions/register', {
@@ -12,7 +15,7 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email, password, age, firstName, lastName })
         });
         
         if(!response.ok){
@@ -21,6 +24,9 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
   
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("first_name").value = "";
+        document.getElementById("last_name").value = "";
   
     }catch(err){
       console.error(err)

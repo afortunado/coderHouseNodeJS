@@ -3,10 +3,16 @@ import { createHash } from "../../../utils/bcrypt.js";
 
 const userService = {};
  
-userService.addUser = async(email, pass) => {
+userService.addUser = async(first_name, last_name, email, age, password) => {
     let hashedPassword = await createHash(pass)
-   const newUser = { email, password: hashedPassword }
-   return await User.create(newUser);
+    const newUser = {
+        first_name,
+        last_name,
+        email,
+        age,
+        password: hashedPassword,
+      };
+      return await User.create(newUser);
 }
 
 userService.getUserById = async(userId) => {

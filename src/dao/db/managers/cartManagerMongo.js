@@ -1,5 +1,7 @@
 import Cart from '../models/cartModel.js'
 import Ticket from '../models/ticketModel.js'
+import Product from '../models/productModel.js'
+import uuid4  from 'uuid4'
 
 const cartService = {}
 
@@ -42,8 +44,37 @@ cartService.deleteAllProducts = async(cartId) => {
 }
 
 cartService.createTicket = async(cart) => {
-        await Ticket.create({ })
-        return await Ticket.find();
+        console.log(cart.products[0].product.price)
+     try{
+         for (cartProduct of cart.products) {
+                const { product } = cartProduct;
+                const { quantity, stock } = product;
+            
+                if (quantity <= stock) {
+                    product.stock -= quantity;
+                    await Product.findOneAndUpdate(
+                        { _id: product._id },
+                        { $set: { stock: product.stock } }
+                    );
+                } else {
+                    throw new Error("There is no enough stock");
+                }
+            };
+            
+        const code = uuid4()
+        const totalAmount = cart.products.reduce((total, product) => {
+                const { price, quantity } = product.product;
+                return total + price * quantity;
+            }, 0);
+        const ticket = await Ticket.create({
+                code: code,
+                purchase_datetime: new Date(),
+                amount: totalAmount,
+                purchaser: "userEmail"
+         })
+         return ticket;
+        } catch(err){ throw new Error(err)}
+        
 }
 
 export default cartService;

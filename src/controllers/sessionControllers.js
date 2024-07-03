@@ -15,3 +15,16 @@ export const logoutUser = async(req, res, next) => {
         next(err);
     }
 }
+
+export const currentSession = async (req, res, next) => {
+    try {
+      if (req.session && req.session.user) {
+        return res.json(req.session.user);
+      } else {
+        return res.status(400).json({ error: 'No current session' });
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
+  

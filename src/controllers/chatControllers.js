@@ -2,9 +2,9 @@ import chatService from '../dao/db/managers/messageManagerMongo.js';
 import io from '../app.js'
  
 export const storeMessage = async(req, res, next) => {
-    const user = req.body;
+    const userAndMsg = req.body;
     try {
-        const msgAdded = await chatService.addMessage(user);
+        const msgAdded = await chatService.addMessage(userAndMsg);
         io.emit('new-message', msgAdded);
         res.status(200).json(msgAdded);
     } catch (error) {
