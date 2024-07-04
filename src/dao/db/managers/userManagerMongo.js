@@ -2,9 +2,9 @@ import User from "../models/userModel.js"
 import { createHash } from "../../../utils/bcrypt.js";
 
 const userService = {};
- 
+
 userService.addUser = async(first_name, last_name, email, age, password) => {
-    let hashedPassword = await createHash(pass)
+    let hashedPassword = await createHash(password)
     const newUser = {
         first_name,
         last_name,

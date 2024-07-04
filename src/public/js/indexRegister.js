@@ -10,7 +10,7 @@ document.getElementById("submitBtn").addEventListener("click", async (event) => 
       alert("All info is required");
     }
     try{
-        const response = await fetch('http://localhost:8080/api/sessions/register', {
+        const response = await fetch('http://localhost:9090/api/sessions/register', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'

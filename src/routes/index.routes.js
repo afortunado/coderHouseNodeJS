@@ -8,6 +8,7 @@ import viewsRouter from "./views.routes.js";
 import mockRouter from "./mock.routes.js";
 import loggerRouter from "./logger.routes.js";
 import apidocsRoute from "./apidocs.routes.js";
+import routerMailer from "./mailer.routes.js";
 
 const routerIndex = Router();
  
@@ -20,5 +21,6 @@ routerIndex.use('/', viewsRouter);
 routerIndex.use('/', mockRouter);
 routerIndex.use("/loggerTest", loggerRouter);
 routerIndex.use('/apidocs', apidocsRoute);
+routerIndex.use('/email', routerMailer);
 
 export default routerIndex;

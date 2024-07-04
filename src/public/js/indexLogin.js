@@ -7,7 +7,7 @@ document.getElementById("loginBtn").addEventListener("click", async (event) => {
     }
   
     try{
-        const response = await fetch('http://localhost:8080/api/sessions/login', {
+        const response = await fetch('http://localhost:9090/api/sessions/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'

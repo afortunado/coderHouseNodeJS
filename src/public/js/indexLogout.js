@@ -2,7 +2,7 @@ document.getElementById("logoutBtn").addEventListener("click", async (event) => 
     event.preventDefault();
     
     try{
-      const response = fetch("http://localhost:8080/api/sessions/logout", {
+      const response = fetch("http://localhost:9090/api/sessions/logout", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

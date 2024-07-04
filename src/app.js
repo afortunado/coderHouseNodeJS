@@ -13,8 +13,8 @@ import dotenv from 'dotenv'
 import compression from 'express-compression';
 
 const app = express();
-const PORT = process.env.PORT || 9090;
 dotenv.config();
+const PORT = process.env.PORT || 9090;
 const server = http.createServer(app);
 
 app.use(express.json());
@@ -49,5 +49,4 @@ server.listen(PORT, () => {
 });
 
 export default io;
- 
 
