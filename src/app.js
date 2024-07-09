@@ -12,6 +12,7 @@ import routerIndex from "./routes/index.routes.js"
 import dotenv from 'dotenv'
 import compression from 'express-compression';
 
+
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 9090;

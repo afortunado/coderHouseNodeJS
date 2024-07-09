@@ -13,7 +13,7 @@ routerCart.post("/:cid/product/:pid", checkRole(['user']), addProductToCart);
 routerCart.get("/:cid", getCartById);
 
 routerCart.put("/:cid/product/:pid", checkRole(['user']), addProductToCart);
-
+ 
 routerCart.delete("/:cid/product/:pid", deleteCartProduct);
 
 routerCart.delete("/:cid", deleteAllProducts);

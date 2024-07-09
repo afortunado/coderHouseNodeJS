@@ -4,7 +4,7 @@ export const getUserById = async(req, res, next) => {
     const userId = req.params.uid;
     try {
         let user = await userService.getUserById(userId)
-        res.status(200).json(user._id);
+        res.status(200).json(user.firts_name, user.email, user.role);
     } catch(err){ next(err); }
 }
 

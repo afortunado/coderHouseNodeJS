@@ -10,11 +10,11 @@ const initializatePassport = () =>{
         { usernameField: 'email', passReqToCallback: true },
         async (req, email, password, done) => {
             try {
-                let { firstName, lastName, age } = req.body;
+                let { first_name, last_name, age } = req.body;
                 let user = await userService.getUserByEmail(email)
                 if(!user){
-                    user = await userService.addUser(firstName, lastName, email, age, password)
-                    return done(null, user.email);
+                    user = await userService.addUser(first_name, last_name, email, age, password)
+                    return done(null, user);
                 }else{throw new Error("User already exists")}
             } catch (err) { return done(err) }
         }));
@@ -47,7 +47,7 @@ const initializatePassport = () =>{
                 let userExist = await userService.getUserByEmail(email)
                 if(!userExist || !await correctPassword(password, userExist.password)){
                     throw new Error("User and password doesn't match")
-                }else {return done(null, userExist.email);}
+                }else {return done(null, userExist);}
             } catch (err) { return done(err) }
         }));
 

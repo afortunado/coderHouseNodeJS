@@ -17,7 +17,7 @@ routerMailer.post('/', async (req, res) =>{
         from: mainEmail,
         to: req.email,
         subject: "Get your password back",
-        html:<button>Restore password</button>
+        html: "html here"
     })
 })
 

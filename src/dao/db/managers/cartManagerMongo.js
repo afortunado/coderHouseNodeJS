@@ -17,12 +17,26 @@ cartService.getCartById = async(cartId) => {
 cartService.addProductToCart = async(cartId, productId) => {
         let currentCart = await Cart.findOne({ _id: cartId }).populate('products.product');
         let existingProduct = currentCart.products.find(e => e.product.equals(productId));
+
         if(!existingProduct){
-                currentCart.products.push({ product: productId, quantity: 1})
-        } else { existingProduct.quantity ++; }
-    
+                const newCartProduct = await Product.findOne({ _id: productId })
+                newCartProduct.quantity = 1;
+                currentCart.products.push({ product: { 
+                        quantity: newCartProduct.quantity,
+                        _id: newCartProduct._id,
+                        title: newCartProduct.title,
+                        description: newCartProduct.description,
+                        price: newCartProduct.price,
+                        thumbnail: newCartProduct.thumbnail,
+                        code: newCartProduct.code,
+                        stock: newCartProduct.stock,
+                        category: newCartProduct.category,
+                        status: newCartProduct.status
+                 } })
+        } else { existingProduct.product.quantity++, console.log(existingProduct.product.quantity) }
         let newCart = await currentCart.save();
-        return newCart;
+
+        return newCart; 
 }
 
 cartService.deleteCartProduct = async(cartId, productId) => {
@@ -44,12 +58,11 @@ cartService.deleteAllProducts = async(cartId) => {
 }
 
 cartService.createTicket = async(cart) => {
-        console.log(cart.products[0].product.price)
+        //console.log(cart.products[0].product.price)
      try{
-         for (cartProduct of cart.products) {
+         for (let cartProduct of cart.products) {
                 const { product } = cartProduct;
                 const { quantity, stock } = product;
-            
                 if (quantity <= stock) {
                     product.stock -= quantity;
                     await Product.findOneAndUpdate(
@@ -71,7 +84,7 @@ cartService.createTicket = async(cart) => {
                 purchase_datetime: new Date(),
                 amount: totalAmount,
                 purchaser: "userEmail"
-         })
+         });
          return ticket;
         } catch(err){ throw new Error(err)}
         

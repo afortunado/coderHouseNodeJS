@@ -10,9 +10,10 @@ userService.addUser = async(first_name, last_name, email, age, password) => {
         last_name,
         email,
         age,
-        password: hashedPassword,
+        password: hashedPassword
       };
-      return await User.create(newUser);
+      const user = await User.create(newUser);
+      return user
 }
 
 userService.getUserById = async(userId) => {
